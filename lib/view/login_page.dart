@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:qr_demo/view/plugin_page.dart';
 import '../controller/login_details_controller.dart';
+import '../widget/dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -181,6 +182,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onPressed: () async {
 
+                              CustomSnackBar.showSnackBar(
+                                  context: Get.context,
+                                  title: "Verifying.....",
+                                  message: "Sending OTP",
+                                  backgroundColor: Colors.white);
+
+                              CustomSnackBar.showSnackBar(
+                                  context: Get.context,
+                                  title: "Sending OTP.....",
+                                  message: "",
+                                  backgroundColor: Colors.white);
+
                               /* PhoneNumber Verification*/
 
                               auth.verifyPhoneNumber(
@@ -191,9 +204,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       smsCode: phoneNumber,
                                     );
                                     setState(() {
+                                      verified = true;
                                       credential = authCredential;
                                       phoneNumber = '+91${phoneNumberController.text}';
-                                      verified = true;
                                     });
                                   },
                                   verificationFailed: (e) {
@@ -268,6 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .format(DateTime.now());
 
                                 /* Calling Ip and Location */
+
                                 initPlatformState();
                                 Position position = await getLocation();
                                 getAddressFromLatLong(position);
@@ -277,29 +291,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                       "details------$yesterdayDate $loginDate $loginTime 'IP:$ipAddress--' $currentAddress");
                                 }
 
-                                try{
-                                  if(verified == true){
+                                try {
+                                    if(verified == true){
 
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User Details are adding".toString())));
+                                      instance.addUserDetails(phoneNumberController.text,verifyOtpController.text);
 
-                                    instance.addUserDetails(phoneNumberController.text,verifyOtpController.text);
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => DashBoardPage(
+                                            loginDate: loginDate,
+                                            yesterdayDate: yesterdayDate,
+                                            loginTime: loginTime,
+                                            ipAddress: ipAddress,
+                                            locationAddress: currentAddress,
+                                          )));
+                                    }else {
+                                      CustomSnackBar.showSnackBar(
+                                          context: Get.context,
+                                          title: "Enter Phone Number and OTP to verify",
+                                          message: "",
+                                          backgroundColor: Colors.white);
+                                      // ScaffoldMessenger.of(context).showSnackBar(
+                                      //     SnackBar(content: Text("Enter Phone Number and OTP to verify".toString())));
+                                    }
 
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => DashBoardPage(
-                                          loginDate: loginDate,
-                                          yesterdayDate: yesterdayDate,
-                                          loginTime: loginTime,
-                                          ipAddress: ipAddress,
-                                          locationAddress: currentAddress,
-                                        )));
-                                  }else if(phoneNumberController.text.isEmpty){
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter PhoneNumber To Verify".toString())));
-                                  }else if(verifyOtpController.text.isEmpty){
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter Otp To Verify".toString())));
-                                  }else {
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter PhoneNumber and Otp To Verify".toString())));
-                                  }
-                                }catch(e){
+                              }catch(e){
                                   if (kDebugMode) {
                                     print('Error---$e');
                                   }

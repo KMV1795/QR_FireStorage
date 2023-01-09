@@ -13,6 +13,8 @@ import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../widget/dialog.dart';
+
 class DashBoardPage extends StatefulWidget {
   final String loginDate;
   final String yesterdayDate;
@@ -234,6 +236,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     InkWell(
                       onTap: () async {
 
+                        CustomSnackBar.showSnackBar(
+                            context: Get.context,
+                            title: "Your Login Details are adding.........",
+                            message: "",
+                            backgroundColor: Colors.white);
+
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Your Login Details are adding.........".toString())));
+
                         /* Convert QR to image and save to Firebase Storage */
 
                         final qrValidationResult = QrValidator.validate(
@@ -300,12 +310,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             .child('qrStorage/$loginDate/$loginTime')
                             .getDownloadURL();
 
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Your Login Details are adding".toString())));
-
 
                         /* Add Login Details To Firebase */
 
-                        await instance.addLoginDetails(
+                        instance.addLoginDetails(
                             loginDate,
                             yesterdayDate,
                             loginTime,

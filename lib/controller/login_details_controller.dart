@@ -29,7 +29,7 @@ class LoginDetailsController extends GetxController{
 
   /* Collection Create and  Read From Firebase for Login Details*/
 
-  CollectionReference userReference = FirebaseFirestore.instance.collection("User");
+  CollectionReference userReference = FirebaseFirestore.instance.collection("user");
   RxList<UserModel> userList = RxList<UserModel>([]);
   late UserModel userModel;
 
