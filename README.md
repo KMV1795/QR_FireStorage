@@ -1,6 +1,6 @@
 # qr_demo
 
-A new Flutter project showing QR image.
+A new Flutter project showing QR image generating using random Number and storing images in firebase storage
 
 ## Getting Started
 
