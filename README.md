@@ -2,15 +2,12 @@
 
 A new Flutter project showing QR image generating using random Number and storing images in firebase storage
 
-## Getting Started
+![Screenshot_20221229_203235](https://user-images.githubusercontent.com/93113467/219571827-6ff65eef-212c-4711-a4c9-38f6c232ea9e.png)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+![Screenshot_20221229_203044](https://user-images.githubusercontent.com/93113467/219571849-c2363d86-caf8-4a50-a2f1-6f28eccce20c.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Uploading Screenshot_20230109_140108.png…]()
+
+
